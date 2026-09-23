@@ -1,7 +1,14 @@
 from datetime import date, datetime
+from typing import Literal
 from uuid import UUID
 
 from sqlmodel import Field, SQLModel
+
+from app.models import Source
+
+# The DB has CHECK (points in (1, 2, 3, 5, 8)). Repeating it here turns a bad
+# value into a 422 with a useful message instead of a 500 from the constraint.
+Points = Literal[1, 2, 3, 5, 8]
 
 
 class ProjectsCreate(SQLModel):
@@ -22,3 +29,37 @@ class ProjectsRead(SQLModel):
     important: bool
     deadline: date | None
     created_at: datetime
+    # Rolled up from the project's steps. progress is 0.0-1.0, which is what
+    # the display's bar-drawing code multiplies by its pixel width.
+    points_done: int = 0
+    points_total: int = 0
+    progress: float = 0.0
+
+
+class StepsCreate(SQLModel):
+    title: str
+    points: Points
+    source: Source = Source.Manual
+    # Omit to append to the end of the project's list.
+    position: int | None = None
+
+
+class StepsUpdate(SQLModel):
+    """Every field optional: only what the request actually sends is applied."""
+
+    title: str | None = None
+    points: Points | None = None
+    position: int | None = None
+    # done is the writable face of done_at: true stamps it, false clears it.
+    done: bool | None = None
+
+
+class StepsRead(SQLModel):
+    id: UUID
+    project_id: UUID
+    title: str
+    points: int
+    position: int
+    source: Source
+    done_at: datetime | None
+    done: bool

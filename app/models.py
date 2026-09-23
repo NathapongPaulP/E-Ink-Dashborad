@@ -62,6 +62,12 @@ class Steps(SQLModel, table=True):
     source: Source = Source.Manual
     done_at: datetime | None = Field(default=None, sa_type=DateTime(timezone=True))
 
+    @property
+    def done(self) -> bool:
+        """done_at doubles as the completion flag; this is the readable face of
+        it. Not a column - schema.StepsRead picks it up by attribute name."""
+        return self.done_at is not None
+
 
 class DailySnapshots(SQLModel, table=True):
     __tablename__ = "daily_snapshots"
