@@ -1,0 +1,10 @@
+{
+  "folders": [
+    { "name": "backend (CPython 3.12)", "path": "." },
+    { "name": "pico (MicroPython)", "path": "mc-functions" }
+  ],
+  "settings": {
+    "python.languageServer": "Pylance",
+    "python.analysis.autoImportCompletions": true
+  }
+}

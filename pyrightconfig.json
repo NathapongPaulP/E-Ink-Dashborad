@@ -1,0 +1,8 @@
+{
+  "//": "CPython 3.12 / FastAPI side. mc-functions is excluded because it is",
+  "// ": "MicroPython and carries its own pyrightconfig.json.",
+  "exclude": [".venv", "**/__pycache__", "mc-functions"],
+  "pythonVersion": "3.12",
+  "venvPath": ".",
+  "venv": ".venv"
+}

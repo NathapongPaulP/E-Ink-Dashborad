@@ -1,0 +1,10 @@
+{
+  "//": "MicroPython 1.29 on a Pico 2 W. Kept in mc-functions/ rather than the",
+  "// ": "repo root on purpose: stubPath shadows stdlib modules (time, gc, socket,",
+  "//  ": "ssl, json...), which would wreck analysis of the CPython FastAPI app.",
+  "//   ": "Open the repo via e-ink-dashboard.code-workspace so this applies here only.",
+
+  "stubPath": "typings",
+  "exclude": ["typings", "**/__pycache__"],
+  "reportMissingModuleSource": "none"
+}

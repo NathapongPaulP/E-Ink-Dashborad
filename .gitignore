@@ -14,3 +14,8 @@ wheels/
 
 # Editor settings (contains local DB credentials)
 .vscode/
+
+mc-functions/lessons/
+
+# MicroPython type stubs (reinstall with the command in mc-functions/lessons/README.md)
+mc-functions/typings/
