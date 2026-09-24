@@ -34,6 +34,9 @@ class ProjectsRead(SQLModel):
     points_done: int = 0
     points_total: int = 0
     progress: float = 0.0
+    # Title of the undone step with the lowest position: what to work on
+    # next. None when the project has no steps or every step is done.
+    current_step: str | None = None
 
 
 class StepsCreate(SQLModel):
