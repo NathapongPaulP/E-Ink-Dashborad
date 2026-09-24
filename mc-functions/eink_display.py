@@ -30,6 +30,7 @@
 from machine import Pin, SPI
 import framebuf
 import utime
+import time
 
 # Display resolution
 EPD_WIDTH       = 128
@@ -177,9 +178,14 @@ class EPD_2in9_Portrait(framebuf.FrameBuffer):
         self.digital_write(self.cs_pin, 1)
         
     def ReadBusy(self):
+
+        deadline = time.ticks_add(time.ticks_ms(), 10000)
+
         print("e-Paper busy")
         while(self.digital_read(self.busy_pin) == 1):      #  0: idle, 1: busy
-            self.delay_ms(10) 
+            if time.ticks_diff(deadline, time.ticks_ms()) <= 0:
+                raise OSError("waited for 10 seconds and gave up")
+            self.delay_ms(10)
         print("e-Paper busy release")  
 
     def TurnOnDisplay(self):
@@ -490,9 +496,14 @@ class EPD_2in9_Landscape(framebuf.FrameBuffer):
         self.digital_write(self.cs_pin, 1)
         
     def ReadBusy(self):
+
+        deadline = time.ticks_add(time.ticks_ms(), 10000)
+
         print("e-Paper busy")
         while(self.digital_read(self.busy_pin) == 1):      #  0: idle, 1: busy
-            self.delay_ms(10) 
+            if time.ticks_diff(deadline, time.ticks_ms()) <= 0:
+                raise OSError("waited for 10 seconds and gave up")
+            self.delay_ms(10)
         print("e-Paper busy release")  
 
     def TurnOnDisplay(self):

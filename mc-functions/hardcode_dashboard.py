@@ -13,8 +13,17 @@ def text_right(s, y, color=0x00):
     epd.text(s, RIGHT - len(s) * 8, y, color)
 
 
+def eisenhow_tag(task: str, y: int):
+    epd.fill_rect((len(task) * 8) + 14, y-2, (len("not imp") * 8) + 8, 12, 0x00)
+    epd.text("not imp", (len(task) * 8) + 17, y, 0xff)
+    _2nd_tag_x = ((len(task) * 8) + 14 + ((len("not imp") * 8) + 14))
+    epd.fill_rect(_2nd_tag_x, y-2, (len("not urge") * 8) + 8, 12, 0x00)
+    epd.text("not urge", _2nd_tag_x + 3, y, 0xff)
+
+
 def task(task: str, prog: float, status: str, y: int) -> int:
     epd.text(task, LINE_X, y, 0x00)
+    eisenhow_tag(task, y)
     text_right(f"{(int(prog * 100))}%", y)
     epd.rect(LINE_X, y + 12, LINE_W, 12, 0x00)
     epd.rect(LINE_X, y + 12, int(LINE_W*prog), 12, 0x00, True)
